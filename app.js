@@ -29,7 +29,7 @@ function perHour(store){
 }
 
 function putInHours(){
-  var hours = [' ', '6am', '7am', '8am', '9am', '10am', '11am', '12pm', '1pm', '2pm', '3pm', '4pm', '5pm', '6pm', '7pm', '8pm'];
+  var hours = [' ', '6am', '7am', '8am', '9am', '10am', '11am', '12pm', '1pm', '2pm', '3pm', '4pm', '5pm', '6pm', '7pm', '8pm', 'Totals'];
 
   var tableRowEl = document.createElement('tr');
   tableEl.appendChild(tableRowEl);
@@ -55,7 +55,20 @@ function pushToSales(store){
     tableRowEl.appendChild(cookieDataEl);
     cookieDataEl.textContent = store.cookiePerHour[i];
   };
+  var totalPerDay = document.createElement('td');
+  tableRowEl.appendChild(totalPerDay);
+  var sumStore = store.cookiePerHour.reduce(function(total, amount){
+    return total + amount;
+  });
+  totalPerDay.textContent = sumStore;
+
 }
+//this is the start of the totals for each hour.
+// function footer() {
+//   var footEl = document.createElement('tfoot');
+//   tableEl.appendChild('footEl');
+//   footEl.textContent =
+// }
 
 function loopStores(){
   for (var i = 0; i < storeObjects.length; i++){
@@ -85,6 +98,27 @@ var alki = new Locations('Alki', 2, 16, 4.6, []);
 
 var storeObjects = [pike, seaTac, seattleCenter, capitolHill, alki];
 // console.log(storeObjects);
+
+var formEl = document.getElementById('new-store');
+formEl.addEventListener('submit', handleSubmit);
+
+function handleSubmit(event){
+  event.preventDefault();
+
+  var location = event.target.location.value;
+  var custMin = parseInt(event.target.custMin.value);
+  var custMax = parseInt(event.target.custMax.value);
+  var avgCookie = parseInt(event.target.avgCookie.value);
+
+  if(location === '1st and Pike' || location === 'SeaTac Airport' || location === 'Seattle Center' || location === 'Capitol Hill' || location === 'Alki') {
+    alert('Invalid input, that store already exists.');
+  } else {
+    var newStore = new Locations(location, custMin, custMax, avgCookie);
+    pushHoursOpen(newStore);
+    perHour(newStore);
+    pushToSales(newStore);
+  }
+}
 
 putInHours();
 loopStores();
