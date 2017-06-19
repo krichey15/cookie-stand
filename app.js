@@ -61,9 +61,8 @@ function pushToSales(store){
     return total + amount;
   });
   totalPerDay.textContent = sumStore;
-
 }
-//this is the start of the totals for each hour.
+// this is the start of the totals for each hour.
 // function footer() {
 //   var footEl = document.createElement('tfoot');
 //   tableEl.appendChild('footEl');
@@ -99,6 +98,10 @@ var alki = new Locations('Alki', 2, 16, 4.6, []);
 var storeObjects = [pike, seaTac, seattleCenter, capitolHill, alki];
 // console.log(storeObjects);
 
+/* I want to create a function that will create a new store from a users input and add it to my array storeObjects so that I can eventually get a total of the cookies sold per hour over all locations.
+
+I want to figure out a way to essentialy have the user create a "new Locations" that I can push into the storeObjects array so that all the code I have already will work for it and I can then get the cookiePerHour total for each location no matter how many there are.   */
+
 var formEl = document.getElementById('new-store');
 formEl.addEventListener('submit', handleSubmit);
 
@@ -111,12 +114,10 @@ function handleSubmit(event){
   var avgCookie = parseInt(event.target.avgCookie.value);
 
   if(location === '1st and Pike' || location === 'SeaTac Airport' || location === 'Seattle Center' || location === 'Capitol Hill' || location === 'Alki') {
-    alert('Invalid input, that store already exists.');
+    alert('Sorry, that store already exists.');
   } else {
     var newStore = new Locations(location, custMin, custMax, avgCookie);
-    pushHoursOpen(newStore);
-    perHour(newStore);
-    pushToSales(newStore);
+    allLocations(newStore);
   }
 }
 
