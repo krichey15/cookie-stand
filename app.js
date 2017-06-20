@@ -9,18 +9,21 @@
 var tableEl = document.createElement('table');
 document.body.appendChild(tableEl);
 
+//creates a random amount of customers
 function randomCust(min, max){
   var randomCount = Math.floor(Math.random() * (max + 1 - min)) + min;
   // console.log(randomCount);
   return randomCount;
 }
 
+//creates an hoursOpen array for each location
 function pushHoursOpen(store){
   for(var i = 1; i < storeObjects.length; i++){
     store.hoursOpen = ['6am', '7am', '8am', '9am', '10am', '11am', '12pm', '1pm', '2pm', '3pm', '4pm', '5pm', '6pm', '7pm', '8pm'];
   }
 }
 
+//This function multiplies the randomCust by the avgCookie sales to create a random number for cookies sold per hour. and pushes that into the empty cookiePerHour array 15 times (or the length of the hoursOpen array).
 function perHour(store){
   for(var i = 1; i <= store.hoursOpen.length; i++){
     store.cookiePerHour.push(randomCust(store.custMin, store.custMax) * Math.floor(store.avgCookie));
@@ -28,6 +31,7 @@ function perHour(store){
   console.log(store.cookiePerHour);
 }
 
+//Creates the top row of the table, which is each hour the stores are open plus the word 'Totals'.
 function putInHours(){
   var hours = [' ', '6am', '7am', '8am', '9am', '10am', '11am', '12pm', '1pm', '2pm', '3pm', '4pm', '5pm', '6pm', '7pm', '8pm', 'Totals'];
 
@@ -41,7 +45,7 @@ function putInHours(){
   };
 }
 
-/*I want change the code below so that it creates a table instead of a list. */
+//creates a function that takes all my data and puts it into a table in HTML
 function pushToSales(store){
   var tableRowEl = document.createElement('tr');
   tableEl.appendChild(tableRowEl);
@@ -62,25 +66,22 @@ function pushToSales(store){
   });
   totalPerDay.textContent = sumStore;
 }
-// this is the start of the totals for each hour.
-// function footer() {
-//   var footEl = document.createElement('tfoot');
-//   tableEl.appendChild('footEl');
-//   footEl.textContent =
-// }
 
+//sole purpose of this function is so that I can loop through all the stores objects and put the data into the table.
 function loopStores(){
   for (var i = 0; i < storeObjects.length; i++){
     allLocations(storeObjects[i]);
   }
 }
 
+//this is a function that calls all my other functions so i dont have to call so many functions at the end of my code.
 function allLocations(store){
   pushHoursOpen(store);
   perHour(store);
   pushToSales(store);
 }
 
+//object constructor that allows me to create new stores.
 function Locations(location, custMin, custMax, avgCookie){
   this.location = location;
   this.custMin = custMin;
@@ -108,18 +109,11 @@ formEl.addEventListener('submit', handleSubmit);
 function handleSubmit(event){
   event.preventDefault();
 
-  var location = event.target.location.value;
-  var custMin = parseInt(event.target.custMin.value);
-  var custMax = parseInt(event.target.custMax.value);
-  var avgCookie = parseInt(event.target.avgCookie.value);
-
-  if(location === '1st and Pike' || location === 'SeaTac Airport' || location === 'Seattle Center' || location === 'Capitol Hill' || location === 'Alki') {
-    alert('Sorry, that store already exists.');
-  } else {
-    var newStore = new Locations(location, custMin, custMax, avgCookie);
-    allLocations(newStore);
-  }
+  var newLocation = new Locations(event.target.location.value, parseInt(event.target.custMin.value), parseInt(event.target.custMax.value), parseInt(event.target.avgCookie.value));
+  console.log(newLocation);
+  allLocations(newLocation);
 }
+
 
 putInHours();
 loopStores();
