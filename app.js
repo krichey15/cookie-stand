@@ -67,6 +67,26 @@ function pushToSales(store){
   totalPerDay.textContent = sumStore;
 }
 
+var totalPerHour = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+
+var tableFooterEl = document.createElement('tfoot');
+tableEl.appendChild(tableFooterEl);
+
+var totalRowEl = document.createElement('tr');
+tableFooterEl.appendChild(totalRowEl);
+
+var columnOneTotal = document.createElement('td');
+totalRowEl.appendChild(columnOneTotal);
+columnOneTotal.textContent = 'Totals';
+
+for(var i = 0; i < totalPerHour.length; i++){
+  var eachHourEl = document.createElement('td');
+  totalRowEl.appendChild(eachHourEl);
+  eachHourEl.textContent = totalPerHour[i];
+}
+
+//This function will be able to take each cookiePerHour array and add them together and place it at the bottome of the table.
+
 //sole purpose of this function is so that I can loop through all the stores objects and put the data into the table.
 function loopStores(){
   for (var i = 0; i < storeObjects.length; i++){
@@ -111,7 +131,9 @@ function handleSubmit(event){
 
   var newLocation = new Locations(event.target.location.value, parseInt(event.target.custMin.value), parseInt(event.target.custMax.value), parseInt(event.target.avgCookie.value));
   console.log(newLocation);
+  storeObjects.push(newLocation);
   allLocations(newLocation);
+  console.log(storeObjects);
 }
 
 
