@@ -29,6 +29,7 @@ function perHour(store){
     store.cookiePerHour.push(randomCust(store.custMin, store.custMax) * Math.floor(store.avgCookie));
   };
   console.log(store.cookiePerHour);
+  // return store.cookiePerHour;
 }
 
 //Creates the top row of the table, which is each hour the stores are open plus the word 'Totals'.
@@ -66,7 +67,7 @@ function pushToSales(store){
   });
   totalPerDay.textContent = sumStore;
 }
-
+/*I want to add cookiePerHour to totalPerHour everytime a new store is created. and I want the new array to be saved so that at the end of all the stores being created I have a totalPerHour*/
 var totalPerHour = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
 
 var tableFooterEl = document.createElement('tfoot');
@@ -85,7 +86,6 @@ for(var i = 0; i < totalPerHour.length; i++){
   eachHourEl.textContent = totalPerHour[i];
 }
 
-//This function will be able to take each cookiePerHour array and add them together and place it at the bottome of the table.
 
 //sole purpose of this function is so that I can loop through all the stores objects and put the data into the table.
 function loopStores(){
