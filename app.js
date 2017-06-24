@@ -68,25 +68,16 @@ function pushToSales(store){
   totalPerDay.textContent = sumStore;
 }
 /*I want to add cookiePerHour to totalPerHour everytime a new store is created. and I want the new array to be saved so that at the end of all the stores being created I have a totalPerHour*/
-var totalPerHour = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
 
-var tableFooterEl = document.createElement('tfoot');
-tableEl.appendChild(tableFooterEl);
-
-var totalRowEl = document.createElement('tr');
-tableFooterEl.appendChild(totalRowEl);
-
-var columnOneTotal = document.createElement('td');
-totalRowEl.appendChild(columnOneTotal);
-columnOneTotal.textContent = 'Totals';
-
-for(var i = 0; i < totalPerHour.length; i++){
-  var eachHourEl = document.createElement('td');
-  totalRowEl.appendChild(eachHourEl);
-  eachHourEl.textContent = totalPerHour[i];
+function sumPerHour(store) {
+  var totalPerHour = [];
+  for(var j = 0; j < zeroArray.length; j++){
+    totalPerHour.push(zeroArray[j] + store.cookiePerHour[j]);
+    zeroArray = totalPerHour;
+    console.log(zeroArray);
+    console.log(totalPerHour);
+  }
 }
-
-
 //sole purpose of this function is so that I can loop through all the stores objects and put the data into the table.
 function loopStores(){
   for (var i = 0; i < storeObjects.length; i++){
@@ -99,6 +90,7 @@ function allLocations(store){
   pushHoursOpen(store);
   perHour(store);
   pushToSales(store);
+  sumPerHour(store);
 }
 
 //object constructor that allows me to create new stores.
@@ -136,6 +128,23 @@ function handleSubmit(event){
   console.log(storeObjects);
 }
 
+var zeroArray = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+
+var tableFooterEl = document.createElement('tfoot');
+tableEl.appendChild(tableFooterEl);
+
+var totalRowEl = document.createElement('tr');
+tableFooterEl.appendChild(totalRowEl);
+
+var columnOneTotal = document.createElement('td');
+totalRowEl.appendChild(columnOneTotal);
+columnOneTotal.textContent = 'Totals';
+
+for(var i = 0; i < zeroArray.length; i++){
+  var eachHourEl = document.createElement('td');
+  totalRowEl.appendChild(eachHourEl);
+  eachHourEl.textContent = zeroArray[i];
+}
 
 putInHours();
 loopStores();
